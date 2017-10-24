@@ -1,0 +1,16 @@
+<div class="w logo_wrap2">
+	<div class="logo_inner left"><a href="index.php">食潮天下</a></div>
+	<div class="logo_search right">
+	  <form action="search.php" id="search_form" method="post" target="_blank"   autocomplete="off">
+	  <div> 
+			<input type="text" class="search" name="searchName">
+			<a href="javascript:document:search_form.submit();" class="search_btn">搜索</a>
+	  </div>
+	 </form>
+	</div>
+	<div class="logo_nav">
+		<a href="CookBook.php" class="<?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/CookBook.php') echo 'on'  ?>">菜谱首页</a>
+		<a href="CookBook_category.php" class="<?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/CookBook_category.php') echo 'on'  ?>" >分类</a>
+		<a href="CookBook_rank.php" class="<?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/CookBook_rank.php') echo 'on'  ?>">排行</a>
+	</div>
+</div>

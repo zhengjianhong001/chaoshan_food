@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><?php echo $title; ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../assets/img/title.ico" type="image/x-icon" rel="shortcut icon" />
+	<script src="../assets/js/jquery-1.9.1.min.js"></script>
+	<script src="../assets/js/indexAll.js"></script>
+
+	<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../assets/js/ajax.js"></script>
+	<link rel="stylesheet" href="../assets/css/indexTop.css" />
+	<link rel="stylesheet" type="text/css" href="../assets/css/footer.css"/>
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-responsive.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../assets/css/mc-all.css"/>
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index_Beauty.css"/>
+</head> 
+<body>
+<div class="top-bar">
+	<ul class="bar-left left ">
+		<li>
+			<img style="margin-top:10px;margin-left: -5px;" src="../assets/img/logo1.png" width="80px" height="80px" alt="">
+		</li>
+		<li>
+			<a href="index.php" target="_blank" class="active">首页</a>
+		</li>
+		<li>
+			<a href="CookBook.php" class="active" target="_blank">菜谱</a>
+		</li>
+		<li>
+			<a href="index.php#area_food_sel" class="active" target="_blank">地区美食</a>
+		</li>
+		<li>
+			<a href="topic.php" class="active" target="_blank">话题</a>
+		</li>
+		<li>
+			<a href="http://www.chaoshanw.cn/Article/mjwh/" class="active" target="_blank">潮汕文化</a>
+		</li>
+	</ul>
+	<div  class="bar" >
+<ul class="bar-right">
+<li class="bar-text"  onmouseover="javascript:show_btn_group()"  onmouseout="javascript:hidden_btn_group()" >
+		<img src="../assets/img/send.png"   width="28" height="18" alt=""  ><span>发布</span>
+
+	</li>
+	<?php
+	if(!isset($_COOKIE["userName"])){
+	?>
+	<li>
+		<a href="register.php">注册</a>
+	</li>
+	<li>
+		<a href="login.php">登录</a>
+	</li>
+	<?php
+	}else{
+	?>
+	<li onmouseover="javascript:show_img_group()"   onmouseout="javascript:hidden_img_group()">
+<a href="mc.php" target="_blank"><img  src="<?php echo getHeadImage($dbc,$_COOKIE['userName']); ?>" style="border-radius: 50%;margin-right:5px;width: 30px;height: 30px;"  alt="" ></a>			
+	</li>
+	<?php
+	}
+	?>
+</ul>
+	
+</div>
+</div>
+<!-- 发布话题菜谱鼠标移上出现 -->
+<div id="btn-group" onmouseover="javascript:show_btn_group()" onmouseout="javascript:hidden_btn_group()" style="top: 40px; float: right; position: fixed; right: 53px; display: none; z-index: 1;" class="btn-group btn-group-vertical" role="group" >
+  <button type="button" style="background: #8ecdd8;height: 40px;color: #f1f1f1;" class="btn btn-default" onclick="window.open('mc-editCookbook.php')">发菜谱</button>
+  <button type="button" style="background: #a6dfea;height: 40px;color: #f1f1f1;" class="btn btn-default" onclick="window.open('mc-editTopic.php')">发话题</button>
+</div>
+<!-- 主页导航条头像鼠标移上出现 -->
+<div id="btn-group1" onmouseover="javascript:show_img_group()" onmouseout="javascript:hidden_img_group()" style="top: 40px; float: right; position: fixed;right: 83px;  z-index: 1;display:none;width: 55px;margin-right:38px;" class="btn-group btn-group-vertical" role="group" >
+  <button type="button" style="background: #585757;height: 40px;color: #f1f1f1;width: 55px;" class="btn btn-default"  onclick="window.open('mc-collect.php')">收藏</button>
+  <button type="button" style="background: #717070;height: 40px;color: #f1f1f1;width: 55px;" class="btn btn-default"  onclick="window.open('mc.php')">管理</button>
+	<button type="button" style="background: #7d7d7d;height: 40px;color: #f1f1f1;width: 55px;" class="btn btn-default"  onclick="window.location.href='index.php?login=out'; ">退出</button>
+</div>
+<script>
+	function show_btn_group(){
+		document.getElementById('btn-group').style.display="block";
+}
+function hidden_btn_group() {
+		document.getElementById('btn-group').style.display="none";
+}
+function show_img_group(){
+		document.getElementById('btn-group1').style.display="block";
+}
+function hidden_img_group() {
+		document.getElementById('btn-group1').style.display="none";
+}
+function tab() {
+    var tab = document.getElementById("tab");
+    var h = tab.getElementsByTagName("h3");
+    var div = tab.getElementsByTagName("div")[1];
+    var ul = div.getElementsByTagName('ul');
+    var index = 0;
+
+    for (var i = 0; i < h.length; i++) {
+        h[i].index = i;
+        h[i].onclick = function () {
+            h[index].className = "";
+            ul[index].className = "";
+            this.className = "select";
+            ul[this.index].className = "active";
+            index = this.index;
+        }
+    }
+}
+//菜谱喜欢
+function update_like_num(food_id) {
+
+	
+		var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBacklike_num() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var like_num =	document.getElementById('like_num');
+				var result = xmlObj.responseText;
+				if(result==-1){
+					alert('您已喜欢过了');
+				}else
+				{
+					like_num.innerHTML=result;
+				}
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBacklike_num;
+		xmlObj.open("GET","update_like_num_ajax.php?food_like_id="+food_id,true);
+		xmlObj.send(null);
+	}
+
+		
+
+//菜谱收藏
+function update_collect_num(food_id) {
+var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBacklike_num() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var collect_num =	document.getElementById('collect_num');
+				var result = xmlObj.responseText;
+				if(result==-1){
+					alert('您已收藏过了');
+				}else
+				{
+					collect_num.innerHTML=result;
+				}
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBacklike_num;
+		xmlObj.open("GET","update_collect_num_ajax.php?food_like_id="+food_id,true);
+		xmlObj.send(null);	
+}
+//话题喜欢
+
+function update_topi_like_num(topic_id) {
+var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBacklike_num() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var like_num =	document.getElementById('like_num');
+				var result = xmlObj.responseText;
+				if(result==-1){
+					alert('您已喜欢过了');
+				}else
+				{
+					like_num.innerHTML=result;
+				}
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBacklike_num;
+		xmlObj.open("GET","update_topi_like_num_ajax.php?topic_like_id="+topic_id,true);
+		xmlObj.send(null);	
+}
+//话题收藏
+function update_topi_collect_num(topic_id) {
+var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBacklike_num() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var collect_num =	document.getElementById('collect_num');
+				var result = xmlObj.responseText;
+				if(result==-1){
+					alert('您已收藏过了');
+				}else
+				{
+					collect_num.innerHTML=result;
+				}
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBacklike_num;
+		xmlObj.open("GET","update_topi_collect_num_ajax.php?topic_like_id="+topic_id,true);
+		xmlObj.send(null);	
+}
+/*用户关注*/
+function user_connect(followed_id,follower_id){
+ 		var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBack_connect() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var user_connect =	document.getElementById('user_connect');
+				var result = xmlObj.responseText;
+				if(result==1){
+					user_connect.innerHTML="✔已关注";
+				}
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBack_connect;
+		xmlObj.open("GET","user_connect_ajax.php?follower_id="+follower_id+"&followed_id="+followed_id,true);
+		xmlObj.send(null);	
+}
+/*用户取消关注*/
+function del_user_connect(followed_id,follower_id){
+ 		var xmlObj;
+		if (window.ActiveXObject) {
+			xmlObj=new ActiveXObject("Microsoft.XMLHTTP");
+		}else if(window.XMLHttpRequest){
+			xmlObj=new XMLHttpRequest();
+		}
+			function callBack_delconnect() {
+			if ((xmlObj.readyState==4)&&(xmlObj.status==200)) {
+				var user_connect =	document.getElementById('user_connect');
+				var fans_num=document.getElementById('fans_num');
+				var result = xmlObj.responseText;
+					user_connect.innerHTML="+关注";
+					fans_num.innerHTML=""+result;
+				
+				
+		}
+	}
+		xmlObj.onreadystatechange=callBack_delconnect;
+		xmlObj.open("GET","deluser_connect_ajax.php?follower_id="+follower_id+"&followed_id="+followed_id,true);
+		xmlObj.send(null);	
+}
+
+</script>

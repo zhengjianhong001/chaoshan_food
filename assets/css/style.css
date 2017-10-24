@@ -1,0 +1,44 @@
+
+*{margin: 0;padding: 0;font-family: "微软雅黑";}
+a{
+	text-decoration: none;
+	color: #333;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+ul{
+	list-style-type: none;
+}
+img{
+	border: 0;
+}
+input,textarea{
+	outline: 0;
+}
+input::-webkit-input-placeholder{
+	color: #767676;
+}
+input:-moz-placeholder{
+	color: #767676;
+}
+input::-moz-placeholder{
+	color: #767676;
+}
+input:-ms-input-placeholder{
+	color: #767676;
+}
+.btn1{
+    background: #ff6767;
+    border: 1px solid #ff6767;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    height: 38px;
+    margin-right: 16px;
+    width: 140px;
+}

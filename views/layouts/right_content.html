@@ -1,0 +1,17 @@
+<div class="mod_right">
+
+	<div class="head_img"><img src="<?php $name=$_COOKIE['userName']; echo getHeadImage($dbc,$name); ?>"  ></div>
+	<div class="detail">
+		<em><a href="" target="_blank"><?php echo $_COOKIE['userName']; ?></a></em>
+		<div class="mc_center_top">
+			<ul>
+				<li class="mc_center_top_det1" >
+				<a  href=""><?php $followed_id=getID($dbc,$_COOKIE['userName']); show_attention_num($dbc,$followed_id); ?><p>关注</p></a>		
+				</li>
+				<li class="mc_center_top_det2">
+				<a  href=""><?php show_fans_num($dbc,$followed_id); ?><p>粉丝</p></a>		
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

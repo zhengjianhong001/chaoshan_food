@@ -1,0 +1,58 @@
+<div class="header">
+	<div class="user-wrap">
+		<div class="face">
+		<?php   $res=user_info($dbc,$_GET['user_id']);foreach($res as $row){?>
+			<a  href="#">
+				<img src="<?php echo $row['head_img'] ?>" />
+			</a>
+		</div>
+		<div class="user-detail">
+			<div class="user-info">
+				<a href="#"><?php echo $row['name'] ?></a>
+				<span>
+					<img src="<?php if($row['sex']=='男'){ echo '../assets/img/boy.png'; }else echo '../assets/img/girl.png';?>">
+				</span>
+			</div>
+			<span class="user-detail_span"><?php echo $row['created_at'] ?>加入</span>
+			<?php } ?>
+		</div>
+		<?php if(sel_user_connect($dbc)){  ?>
+
+ <a class="user_connect_btn"  onclick="del_user_connect(<?php echo $_GET['user_id'] ?>,<?php echo getID($dbc,$_COOKIE['userName']) ?>)"  style="display:<?php  if(!isset($_COOKIE['userName']) || getID($dbc,$_COOKIE['userName'])==$_GET['user_id']) echo 'none' ?>; "   href="<?php echo $_SERVER['PHP_SELF'].'?user_id='.$_GET['user_id']; ?>"><span id="user_connect">✔已关注 | 取消</span></a>
+
+
+		<?php 	}else{   ?> 
+		 <a class="user_connect_btn" style="display:<?php  if(!isset($_COOKIE['userName']) || getID($dbc,$_COOKIE['userName'])==$_GET['user_id']) echo 'none' ?>; "  onclick="user_connect(<?php echo $_GET['user_id'] ?>,<?php echo getID($dbc,$_COOKIE['userName']) ?>)" href="<?php echo $_SERVER['PHP_SELF'].'?user_id='.$_GET['user_id']; ?>"><span id="user_connect">+关注</span></a><?php } ?>
+		<div class="personal_var_link">
+		<div class="personal_var_link_fans">
+			<a  href="user_fans.php?user_id=<?php echo $_GET['user_id'] ?>"><span id="fans_num"><?php show_fans_num($dbc,$_GET['user_id']); ?></span><br/>粉丝</a>
+			</div>
+			<div class="personal_var_link_on">
+			<a href="user_attention.php?user_id=<?php echo $_GET['user_id'] ?>"><span style=""><?php show_attention_num($dbc,$_GET['user_id']); ?></span><br/>关注</a>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<!--这是导航栏-->
+<div class="personal_nav">
+	<ul>
+		<li>
+			<a href="index.php">首页</a>
+		</li>         
+		<li class="<?php $user_id=$_GET['user_id']; if($_SERVER['PHP_SELF']=='/chaoshan_food/php/personal_index.php') echo 'active'  ?>">
+			<a href="personal_index.php?user_id=<?php echo $_GET['user_id'] ?>">主页</a>
+		</li>
+		<li class="<?php if($_SERVER['PHP_SELF']=='/chaoshan_food/php/personal_cookbook.php') echo 'active'  ?>">
+			<a href="personal_cookbook.php?user_id=<?php echo $_GET['user_id'] ?>">菜谱</a>
+		</li>
+		<li class="<?php if($_SERVER['PHP_SELF']=='/chaoshan_food/php/personal_topic.php') echo 'active'  ?>">
+			<a href="personal_topic.php?user_id=<?php echo $_GET['user_id'] ?>">话题</a>
+		</li>
+		<li class="<?php if($_SERVER['PHP_SELF']=='/chaoshan_food/php/personal_collect.php') echo 'active'  ?>">
+			<a href="personal_collect.php?user_id=<?php echo $_GET['user_id'] ?>">收藏</a>
+		</li>
+	</ul>
+</div>
+<div class="index-content">

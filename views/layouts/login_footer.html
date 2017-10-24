@@ -1,0 +1,26 @@
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+    
+   $("#bodyPage").fullImages({
+	   ImgWidth: 1920,
+	   ImgHeight: 980,
+	   autoplay :  4000,
+	   fadeTime : 1300
+   });
+	
+});
+window.onload=function(){
+	var login=document.getElementById("login");
+	var bodyW=document.documentElement.clientWidth;
+	var bodyH=document.documentElement.clientHeight;
+	var elW=login.offsetWidth;
+	var elH=login.offsetHeight;
+
+	login.style.left=(bodyW-elW)/2+"px";
+	login.style.top=(bodyH-elH)/2+"px";
+}
+
+</script>
+</body>
+</html>

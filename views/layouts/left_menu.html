@@ -1,0 +1,13 @@
+<div class="w_main clear">
+<div class="mod_left">
+	<div class="menu_wrap" >
+		<ul>
+			<li <?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc.php') echo "class=\"on\""  ?>><a href="mc.php" >会员中心</a></li>
+			<li><a href="mc-CookBook.php" <?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-CookBook.php' || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-examing.php'  || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-examed.php' || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-editCookbook.php') echo "class=\"on\""  ?>>菜谱</a></li>
+			<li><a href="mc-topic.php" <?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-topic.php' || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-editTopic.php') echo "class=\"on\""  ?>>话题</a></li>
+			<li><a href="mc-collect.php" <?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-collect.php' || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-collect-topic.php') echo "class=\"on\""  ?>>收藏</a></li>
+			<li><a href="mc-info.php" <?php if($_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-info.php' || $_SERVER['REQUEST_URI']=='/chaoshan_food/php/mc-changepsw.php') echo "class=\"on\""  ?>>账户设置</a></li>
+		</ul>
+	</div>
+</div>
+</div>
